@@ -8,6 +8,18 @@
     "category": "General",
     "versions": [
       {
+        "version": "0.1.2.0",
+        "targetAbi": "12.2.0.0",
+        "sourceUrl": "https://github.com/cosmobits/jellyfin-plugin-shorts/releases/download/v0.1.2/jellyfin-shorts-0.1.2.0.zip",
+        "checksum": "DC2A0CC7A658A0FC81572C29E7F76A25",
+        "timestamp": "2026-11-25T14:32:07Z",
+        "changelog": "Initial Jellyfin 12.2 preview release. Shared React UI with standalone mode.",
+        "dependencies": [
+          "5b6550fa-a014-4f4c-8a2c-59a43680ac6d",
+          "5e87cc92-571a-4d8d-8d98-d2d4147f9f90"
+        ]
+      },
+      {
         "version": "0.1.1.0",
         "targetAbi": "12.2.0.0",
         "sourceUrl": "https://github.com/cosmobits/jellyfin-plugin-shorts/releases/download/v0.1.1/jellyfin-shorts-0.1.1.0.zip",
