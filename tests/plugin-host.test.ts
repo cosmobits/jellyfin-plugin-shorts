@@ -1,6 +1,6 @@
 import { afterEach, expect, it, vi } from 'vitest';
 import { createPluginHost } from '../src/plugin/host';
-const api={getUrl:()=> 'https://example.test/jellyfin/',getCurrentUserId:()=> 'viewer',accessToken:()=> 'runtime-only-test-token',deviceId:()=> 'browser-device'};
+const api={getUrl:(path: string)=> { if (!path) throw new Error('Url name cannot be empty'); return 'https://example.test/jellyfin/'; },getCurrentUserId:()=> 'viewer',accessToken:()=> 'runtime-only-test-token',deviceId:()=> 'browser-device'};
 afterEach(()=>vi.unstubAllGlobals());
 it('uses the existing session and server base path without logging out the host',async()=>{
   const navigate=vi.fn();

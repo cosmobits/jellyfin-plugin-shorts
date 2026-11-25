@@ -9,7 +9,7 @@ export interface JellyfinWebApi {
   deviceId(): string;
 }
 export function createPluginHost(api: JellyfinWebApi, navigate: (hash: string) => void, storage?: Pick<Storage,'getItem'|'setItem'>): ShortsHost {
-  const server = normalizeServer(api.getUrl(''));
+  const server = normalizeServer(api.getUrl('/'));
   const userId = api.getCurrentUserId();
   const token = api.accessToken();
   if (!userId || !token) throw new Error('Sign in to Jellyfin before opening Shorts.');
