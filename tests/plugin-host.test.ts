@@ -21,7 +21,7 @@ it('stores only preferences, scoped to server and viewer',()=>{
   const settings={maxDurations:[10,20,30,40,60] as [number,number,number,number,number],excerptDurations:[2,3,5,10,15] as [number,number,number,number,number]};
   host.savePreviewSettings?.(settings);
   expect([...values.values()][0]).not.toContain(api.accessToken());
-  expect(createPluginHost(api,()=>{},storage).previewSettings).toEqual(settings);
+  expect(createPluginHost(api,()=>{},storage).previewSettings).toEqual({...settings,aspectRatio:"auto"});
   expect(createPluginHost({...api,getCurrentUserId:()=> 'another-viewer'},()=>{},storage).previewSettings?.excerptDurations).toEqual([5,5,5,5,5]);
 });
 it('requires an existing login',()=>{

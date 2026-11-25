@@ -13,13 +13,13 @@
     if (!document.querySelector('link[data-jellyfin-shorts-style]')) {
         var css = document.createElement('link');
         css.rel = 'stylesheet';
-        css.href = api.getUrl('Shorts/Assets/shorts.css') + '?v=0.1.1.0';
+        css.href = api.getUrl('Shorts/Assets/shorts.css') + '?v=0.1.2.0';
         css.dataset.jellyfinShortsStyle = 'true';
         document.head.appendChild(css);
     }
     if (window.JellyfinShorts) { mount(); return; }
     var script = document.createElement('script');
-    script.src = api.getUrl('Shorts/Assets/shorts.js') + '?v=0.1.1.0';
+    script.src = api.getUrl('Shorts/Assets/shorts.js') + '?v=0.1.2.0';
     script.onload = mount;
     script.onerror = failed;
     document.head.appendChild(script);

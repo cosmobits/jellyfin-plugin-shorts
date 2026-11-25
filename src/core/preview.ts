@@ -2,11 +2,11 @@ export interface Excerpt { start: number; duration: number }
 export interface Video { id: string; name: string; duration: number; series?: string }
 export interface Preview { video: Video; excerpts: Excerpt[] }
 export type DurationBands = [number, number, number, number, number];
-export interface PreviewSettings { maxDurations: DurationBands; excerptDurations: DurationBands }
+export interface PreviewSettings { maxDurations: DurationBands; excerptDurations: DurationBands; aspectRatio?: string }
 export const defaultPreviewSettings: PreviewSettings = { maxDurations: [10, 20, 30, 40, 60], excerptDurations: [5, 5, 5, 5, 5] };
 export function normalizePreviewSettings(value?: Partial<PreviewSettings> & { excerptDuration?: number }): PreviewSettings {
   const limit = (v: unknown, fallback: number, max: number) => typeof v === 'number' && Number.isFinite(v) ? Math.min(max, Math.max(1, Math.round(v))) : fallback;
-  return { maxDurations: defaultPreviewSettings.maxDurations.map((d, i) => limit(value?.maxDurations?.[i], d, 120)) as PreviewSettings['maxDurations'], excerptDurations: defaultPreviewSettings.excerptDurations.map((d, i) => limit(value?.excerptDurations?.[i], limit(value?.excerptDuration, d, 30), 30)) as DurationBands };
+  return { aspectRatio: ['auto','9:16','4:5','1:1','4:3','16:9','21:9'].includes(value?.aspectRatio || '') ? value!.aspectRatio : 'auto', maxDurations: defaultPreviewSettings.maxDurations.map((d, i) => limit(value?.maxDurations?.[i], d, 120)) as PreviewSettings['maxDurations'], excerptDurations: defaultPreviewSettings.excerptDurations.map((d, i) => limit(value?.excerptDurations?.[i], limit(value?.excerptDuration, d, 30), 30)) as DurationBands };
 }
 export function createPreview(video: Video, random = Math.random, settings = defaultPreviewSettings): Preview {
   const d = video.duration;
