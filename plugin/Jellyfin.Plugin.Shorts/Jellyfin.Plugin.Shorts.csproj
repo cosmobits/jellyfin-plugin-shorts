@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>0.1.0.0</Version>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PathMap>$(MSBuildProjectDirectory)=/_/plugin</PathMap>
+    <DebugType>none</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Authors>Jellyfin Shorts contributors</Authors>
+    <Description>A swipeable Shorts page for Jellyfin Web.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Jellyfin.Controller" Version="12.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Jellyfin.Model" Version="12.2.0" ExcludeAssets="runtime" />
+    <EmbeddedResource Include="Web/page.html" />
+    <EmbeddedResource Include="Web/dist/shorts.js" />
+    <EmbeddedResource Include="Web/dist/shorts.css" />
+    <EmbeddedResource Include="Configuration/config.html" />
+  </ItemGroup>
+  <Target Name="RequireFrontend" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('Web/dist/shorts.js')" Text="Run npm run build:plugin before building the plugin." />
+  </Target>
+</Project>

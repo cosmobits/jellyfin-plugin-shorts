@@ -1,0 +1,13 @@
+import type { Video, PreviewSettings } from '../core/preview';
+export interface Library { id: string; name: string }
+export interface Stream { url: string; hls: boolean; offset: number; dispose(): Promise<void> }
+export interface ShortsHost {
+  libraries(signal: AbortSignal): Promise<Library[]>;
+  videos(library: string, signal: AbortSignal): Promise<Video[]>;
+  stream(video: Video, start: number, signal: AbortSignal): Promise<Stream>;
+  openVideo(video: Video): void;
+  exit(): void;
+  exitLabel?: string;
+  previewSettings?: PreviewSettings;
+  savePreviewSettings?(settings: PreviewSettings): void;
+}
