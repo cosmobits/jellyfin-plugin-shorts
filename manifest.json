@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "guid": "c7c09a75-f1ae-42b5-afd2-6b770ab7301a",
+    "name": "Shorts",
+    "overview": "A swipeable video preview feed for Jellyfin Web.",
+    "description": "Discover random moments from your libraries. Requires Plugin Pages and File Transformation for Jellyfin 12.2.",
+    "owner": "cosmobits",
+    "category": "General",
+    "versions": [
+      {
+        "version": "0.1.0.0",
+        "targetAbi": "12.2.0.0",
+        "sourceUrl": "https://github.com/cosmobits/jellyfin-plugin-shorts/releases/download/v0.1.0/jellyfin-shorts-0.1.0.0.zip",
+        "checksum": "0021C5B3517A3219396B89680C4A7D12",
+        "timestamp": "2026-11-25T04:45:50Z",
+        "changelog": "Initial Jellyfin 12.2 preview release. Shared React UI with standalone mode.",
+        "dependencies": [
+          "5b6550fa-a014-4f4c-8a2c-59a43680ac6d",
+          "5e87cc92-571a-4d8d-8d98-d2d4147f9f90"
+        ]
+      }
+    ]
+  }
+]
