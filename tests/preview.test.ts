@@ -26,7 +26,7 @@ it('caps total duration at runtime and divides fractional budgets without overla
   expect(p.excerpts).toEqual([{start:0,duration:7}]);
 });
 it('normalizes invalid saved settings', () => {
-  expect(normalizePreviewSettings({maxDurations:[NaN,0,999,20,60],excerptDuration:0})).toEqual({aspectRatio:"auto",maxDurations:[10,1,120,20,60],excerptDurations:[1,1,1,1,1]});
+  expect(normalizePreviewSettings({maxDurations:[NaN,0,999,20,60],excerptDuration:0})).toEqual({startMuted:true,preloadNext:true,aspectRatio:"auto",maxDurations:[10,1,120,20,60],excerptDurations:[1,1,1,1,1]});
 });
 
 it.each([[30,10],[31,20],[180,20],[181,30],[600,30],[601,40],[2399,40],[2400,60],[7200,60]])('uses correct budget at %s seconds', (duration,total) => {

@@ -32,6 +32,17 @@ export function createJellyfinHost(session: Session, exit: () => void, onExpired
   };
   return {
     exit,
+    async details(id, signal) {
+      const item = await api(`/Users/${session.userId}/Items/${encodeURIComponent(id)}`, signal);
+      return { favorite: !!item.UserData?.IsFavorite, cast: (item.People || []).filter((p: any) => p.Type === 'Actor').map((p: any) => ({
+        id: p.Id, name: p.Name, role: p.Role,
+        image: p.PrimaryImageTag ? `${session.server}/Items/${encodeURIComponent(p.Id)}/Images/Primary?${new URLSearchParams({tag:p.PrimaryImageTag,maxWidth:'160'})}` : undefined
+      })) };
+    },
+    async setFavorite(id, favorite) {
+      const data = await api(`/Users/${session.userId}/FavoriteItems/${encodeURIComponent(id)}`, undefined, {method: favorite ? 'POST' : 'DELETE'});
+      return typeof data?.IsFavorite === 'boolean' ? data.IsFavorite : favorite;
+    },
     async libraries(signal) {
       const data = await api(`/Users/${session.userId}/Views`, signal);
       return data.Items.map((x: any) => ({ id: x.Id, name: x.Name }));
