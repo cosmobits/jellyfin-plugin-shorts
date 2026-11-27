@@ -3,7 +3,7 @@ import { locatePreviewTime, type Preview } from '../core/preview';
 import type { ShortsHost } from '../host/types';
 import { PreparedMedia } from '../playback/PreparedMedia';
 export interface PlayerHandle { seek(seconds: number): void }
-export const Player=forwardRef<PlayerHandle,{preview:Preview;host:ShortsHost;muted:boolean;paused:boolean;preloadNext?:boolean;onComplete():void;onProgress(value:number):void;onNeedsPlay():void}>(function Player(props,handle){
+export const Player=forwardRef<PlayerHandle,{preview:Preview;host:ShortsHost;muted:boolean;volume?:number;paused:boolean;preloadNext?:boolean;onComplete():void;onProgress(value:number):void;onNeedsPlay():void}>(function Player(props,handle){
   const refs=[useRef<HTMLVideoElement>(null),useRef<HTMLVideoElement>(null)];
   const [cursor,setCursor]=useState({segment:0,within:0,revision:0});
   const [active,setActive]=useState(0);
@@ -36,7 +36,7 @@ export const Player=forwardRef<PlayerHandle,{preview:Preview;host:ShortsHost;mut
       try{
         await next.ready;if(cancelled)return;
         current?.dispose();current=next;pending=undefined;slot=nextSlot;segment=nextSegment;within=nextWithin;
-        playing.current=next.element;next.element.muted=latest.current.muted;
+        playing.current=next.element;next.element.muted=latest.current.muted;next.element.volume=latest.current.volume ?? 1;
         setActive(slot);setError('');clearWaiting();transitioning=false;play();prepareNext();
       }catch{
         next.dispose();if(!cancelled){clearWaiting();setError('Unable to play this moment. Try seeking or skip this video.');}
@@ -72,6 +72,6 @@ export const Player=forwardRef<PlayerHandle,{preview:Preview;host:ShortsHost;mut
       initial.dispose();current?.dispose();prepared?.dispose();pending?.dispose();
     };
   },[props.preview,props.host,cursor,props.preloadNext]);
-  useEffect(()=>{const v=playing.current;if(!v)return;v.muted=props.muted;if(props.paused)v.pause();else void v.play().catch(()=>latest.current.onNeedsPlay());},[props.paused,props.muted]);
+  useEffect(()=>{const v=playing.current;if(!v)return;v.muted=props.muted;v.volume=props.volume ?? 1;if(props.paused)v.pause();else void v.play().catch(()=>latest.current.onNeedsPlay());},[props.paused,props.muted,props.volume]);
   return <>{refs.map((ref,i)=><video key={i} ref={ref} playsInline preload="auto" aria-label={props.preview.video.name} aria-hidden={i!==active} style={{position:'absolute',inset:0,visibility:i===active?'visible':'hidden'}}/>)}{status&&!error&&<div className="shorts-status" role="status">{status}</div>}{error&&<div className="shorts-status shorts-error" role="alert">{error}</div>}</>;
 });
